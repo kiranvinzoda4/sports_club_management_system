@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>sports club</title>
+    <script src="{% static 'assets2/js/my_js.js'%}"></script>
+    <script src="{% static 'assets2/js/jquery.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+    <script>
+        function login(e) {
+            var user_email = document.getElementById("email").value;
+            var user_pass = document.getElementById("password").value;
+            if (user_pass == "") {
+                alert("enter your password");
+                e.preventDefault(e);
+                someBug();
+                return false
+            }
+            if (user_email == "") {
+                alert("enter your email");
+                e.preventDefault(e);
+                someBug();
+                return false
+            }
+        }
+    </script>
+    <style>
+        input[type=text],
+        select {
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid blue;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: black;
+        }
+
+        input[type=password],
+        select {
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid blue;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- notification for small viewports and landscape oriented smartphones -->
+    <div class="device-notification">
+        <a class="device-notification--logo" href="#0">
+            <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+            <p>Sports Club</p>
+        </a>
+        <p class="device-notification--message">Sports club has so much to offer that we must request you orient your
+            device
+            to
+            portrait or find a larger screen. You won't be disappointed.</p>
+    </div>
+    <div class="perspective effect-rotate-left">
+        <div class="container">
+            <div class="outer-nav--return"></div>
+            <div id="viewport" class="l-viewport">
+                <div class="l-wrapper">
+                    <header class="header">
+                        <a class="header--logo" href="#0">
+                            <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+                            <p>Sports Club</p>
+                        </a>
+                        <button class="header--cta cta">Log in</button>
+                    </header>
+                    <nav class="l-side-nav">
+                        <ul class="side-nav">
+                            <li class="is-active"><span><a href="home"> home </a></span></li>
+                            <li class="is-active"><span><a href="login_page"> login </a></span></li>
+                            <li class="is-active"><span><a href="registration_page"> registration </a></span></li>
+                            <li class="is-active"><span><a href="about_us"> about us </a></span></li>
+                            <li class="is-active"><span><a href="contact_us"> contact us </a></span></li>
+                        </ul>
+                    </nav>
+                    <div class="about">
+                        <div class="work--lockup">
+                            <div style="width: 100%;">
+
+                                <h1>
+                                    payment failed
+
+                                </h1>
+                            </div>
+                            </form>
+                        </div>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+                        <script src="{% static 'assets2/js/functions-min.js'%}"></script>
+                        <style>
+                            a,
+                            a:hover,
+                            a:active,
+                            a:visited {
+                                color: white;
+                                text-decoration: none;
+                            }
+                        </style>
+</body>
+
+</html>

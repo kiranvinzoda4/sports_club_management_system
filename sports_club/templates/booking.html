@@ -1,0 +1,941 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <link rel="stylesheet" href="{% static 'assets2/css/my_css.css'%}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script>
+    function getTime() {
+
+      var g_id = $("#ground").val();
+      var date = $("#date").val();
+      console.log(g_id);
+      $.ajax({
+
+        type: "POST",
+        url: "/gettime",
+        data: '{"id" : "' + g_id + '","date" : "' + date + '"}',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+          console.log(result);
+          for (var a = 1; a <= 18; a++) {
+            console.log("#checkbox" + a);
+            $("#checkbox" + a).removeAttr('disabled');
+            $("#div" + a).css("background-color", "#104068");
+          }
+
+          for (i = 0; i < result.length; i++) {
+
+            console.log(result[i].id);
+            $("#checkbox" + result[i].id).attr("disabled", true);
+            $("#div" + result[i].id).css("background-color", "red");
+          };
+
+
+        }
+      });
+    }
+    function getTime2() {
+
+      var g_id = $("#ground2").val();
+      var date = $("#date2").val();
+      console.log(g_id);
+      $.ajax({
+
+        type: "POST",
+        url: "/gettime",
+        data: '{"id" : "' + g_id + '","date" : "' + date + '"}',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+          console.log(result);
+          for (var a = 1; a <= 18; a++) {
+            $("#checkboxx" + a).removeAttr('disabled');
+            $("#divv" + a).css("background-color", "#104068");
+          }
+
+          for (i = 0; i < result.length; i++) {
+
+            console.log(result[i].id);
+            $("#checkboxx" + result[i].id).attr("disabled", true);
+            $("#divv" + result[i].id).css("background-color", "red");
+          };
+
+
+        }
+      });
+    }
+
+    function getteam() {
+      var s_id = $("#sports").val();
+      console.log(s_id);
+      $.ajax({
+
+        type: "POST",
+        url: "getteams",
+        data: '{"id" : ' + s_id + '}',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+
+          $("#team option").remove();
+          for (var i = result.length - 1; i >= 0; i--) {
+            console.log(result[i].id);
+            $("#team").append('<option value=' + result[i].id + ' id=' + result[i].id + '>' + result[i].name + '</option>');
+          };
+
+        }
+      });
+    }
+
+    function bookingdata(e) {
+      console.log("sfdgfggwgg");
+      var sports = document.getElementById("sports").value;
+      var ground = document.getElementById("ground").value;
+      var team = document.getElementById("team").value;
+      var date = document.getElementById("date").value;
+      var errors = [];
+      if (date == "") {
+        errors[0]="pleas select date";
+
+      }else{ errors[0] = ""; }
+      if (team == "select team") {
+        errors[1]="pleas select team";
+
+      }else{ errors[0] = ""; }
+      if (sports == "select group") {
+        errors[2]="pleas select ground";
+      
+      }else{ errors[0] = ""; }
+      if (sports == "select sports") {
+        errors[3]="pleas select sports";
+      }else{ errors[0] = ""; }
+      if ($('input[name="checks[]"]:checked').length) {
+         errors[0] = ""; 
+  
+      } else {
+        errors[4]="no checkbox checked";
+ 
+      }
+      var e = 0;
+      for(var i = 0;i<5;i++){
+        if(errors[i]!=""){
+          e=e+1;
+        }
+      }
+      if(e!=5){
+        for(var j=0;j<5;j++){
+          document.getElementById("#e"+j).textContent = errors[j];
+        }
+        e.preventDefault(e);
+        return false
+      }
+
+    }
+
+  </script>
+  <style>
+    
+    .tableadd { border-collapse: separate;  }
+.tdadd { border: solid 1px white; }
+
+.tradd { background-color: white; color: black; }
+tr:first-child td:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+
+    a,
+    a:hover,
+    a:active,
+    a:visited {
+      color: white;
+      text-decoration: none;
+    }
+
+    .box {
+      width: 40%;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 35px;
+      border: 2px solid #fff;
+      border-radius: 20px/50px;
+      background-clip: padding-box;
+      text-align: center;
+    }
+
+    .button {
+      font-size: 1em;
+      padding: 10px;
+      color: #fff;
+      border: 2px solid #06D85F;
+      border-radius: 20px/50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease-out;
+    }
+
+    .button:hover {
+      background: #06D85F;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      transition: opacity 500ms;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .overlay:target {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup {
+      margin: 70px auto;
+      padding: 20px;
+      background: rgb(31, 29, 29);
+      border-radius: 5px;
+      width: 30%;
+      position: relative;
+      transition: all 5s ease-in-out;
+    }
+
+    .popup h2 {
+      margin-top: 0;
+      color: #333;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    .popup .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: all 200ms;
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .popup .close:hover {
+      color: #06D85F;
+    }
+
+    .popup .content {
+      max-height: 30%;
+      overflow: auto;
+    }
+
+    @media screen and (max-width: 700px) {
+      .box {
+        width: 70%;
+      }
+
+      .popup {
+        width: 70%;
+      }
+    }
+
+    div label input {
+      margin-right: 100px;
+    }
+
+    .cat {
+      margin: 4px;
+      background-color: #104068;
+      border-radius: 4px;
+      border: 1px solid #fff;
+      overflow: hidden;
+      float: left;
+    }
+
+    .cat label {
+      float: left;
+      line-height: 3.0em;
+      width: 8.0em;
+      height: 3.0em;
+    }
+
+    .cat label span {
+      text-align: center;
+      padding: 3px 0;
+      display: block;
+    }
+
+    .cat label input {
+      position: absolute;
+      display: none;
+      color: #fff !important;
+    }
+
+    /* selects all of the text within the input element and changes the color of the text */
+    .cat label input+span {
+      color: #fff;
+    }
+
+
+    /* This will declare how a selected input will look giving generic properties */
+    .cat input:checked+span {
+      color: #ffffff;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+    }
+
+
+    /*
+This following statements selects each category individually that contains an input element that is a checkbox and is checked (or selected) and chabges the background color of the span element.
+*/
+
+    .a input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .b input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .c input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .d input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .e input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .f input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .g input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .h input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .i input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .j input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .k input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .l input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .m input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .n input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .o input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .p input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .q input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .r input:checked+span {
+      background-color: #82D44E;
+    }
+  </style>
+  </style>
+</head>
+
+<body>
+
+  <!-- notification for small viewports and landscape oriented smartphones -->
+  <div class="device-notification">
+    <a class="device-notification--logo" href="#0">
+      <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+      <p>Sports Club</p>
+    </a>
+    <p class="device-notification--message">Sports club has so much to offer that we must request you orient your device to
+      portrait or find a larger screen. You won't be disappointed.</p>
+  </div>
+
+  <div class="perspective effect-rotate-left">
+    <div class="container">
+      <div class="outer-nav--return"></div>
+      <div id="viewport" class="l-viewport">
+        <div class="l-wrapper">
+          <header class="header">
+            <a class="header--logo" href="#0">
+              <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+              <p>Sports Club</p>
+            </a>
+            <a href="logout" style="background-color: blue; width:5%; border-radius: 25px;">
+              <center>log out</center>
+            </a>
+          </header>
+          <nav class="l-side-nav">
+            <ul class="side-nav">
+              <li class="is-active"><span><a href="/profile2"> Profile </a></span></li>
+              <li class="is-active"><span><a href="/team_page"> team </a></span></li>
+              <li class="is-active"><span><a href="/player"> players </a></span></li>
+              <li class="is-active"><span><a href="/booking"> booking </a></span></li>
+              <li class="is-active"><span><a href="/tournament"> tournament </a></span></li>
+              <li class="is-active"><span><a href="/class"> class </a></span></li>
+            </ul>
+          </nav>
+          <ul class="l-main-content main-content">
+            <li class="l-section section section--is-active">
+              <div class="intro">
+                <div class="about--banner">
+                 
+                  <table style="width: 100%; border-radius: 10px;">
+                    <tr>
+                      <td style="width:30%; padding: 15px;">
+                        <h1>ground booking</h1>
+                        <div style="width: 100%; display: {{form_1}};" class="left">
+                          <h3>booking </h3>
+                          <form action="/booking_request" method="post">
+                            {% csrf_token %}
+                            <table width="100%">
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="sportd">sports :</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <select onchange="getdata()" id="sports" class="input_edit" name="sports" {disabled}>
+                                    <option value="select sports">select sport </option>
+                                    {% for i in sports %}
+                                    <option value="{{i.sports_id}}">{{ i.sports_name }} </option>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e0">{{message.sports}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="sportd"> ground :</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <select class="input_edit" id="ground" name="ground">
+                                    <option> select group </option>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e1">{{message.ground}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="team_select"> team :</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <select onclick="getteam();" class="input_edit" id="team" name="team">
+                                    <option> select team </option>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+
+                                </td>
+                                <td style=" padding: 3px;">
+ <p style="margin: 0pt; color: red;" id="e2">{{message.team}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="date"> date :</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input class="input_edit" type="date" id="date" min="{{today}}" name="date">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e3">{{message.date}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="time"> time :</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <a class="button" onclick="getTime();" href="#popup2">time slot</a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e4">{{message.check}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                            <td style=" padding: 3px;">
+
+                            </td>
+                            <td style=" padding: 3px;">
+                              <input type="submit"  style="background-color: blue; width: 70px;
+                              height: 25px; border-radius: 25px;" value="Submit">
+                            </td>
+                              </tr>
+
+                            </table>
+        
+                            <div id="popup2" class="overlay">
+                              <div class="popup">
+                                <br> <a class="close" href="#"> ok </a> <br> <br>
+                                <div class="content">
+                                  <div id="div1" class="cat a">
+                                    <label>
+                                      <input type="checkbox" id="checkbox1" name="checks[]" value="1"><span>6 am to 7
+                                        am</span>
+                                    </label>
+                                  </div>
+                                  <div id="div2" class="cat b">
+                                    <label>
+                                      <input type="checkbox" id="checkbox2" name="checks[]" value="2"><span>7 am to 8
+                                        am</span>
+                                    </label>
+                                  </div>
+                                  <div id="div3" class="cat c">
+                                    <label>
+                                      <input type="checkbox" id="checkbox3" name="checks[]" value="3"><span>8 am to 9
+                                        am</span>
+                                    </label>
+                                  </div>
+                                  <div id="div4" class="cat d">
+                                    <label>
+                                      <input type="checkbox" id="checkbox4" name="checks[]" value="4"><span>9 am to 10
+                                        am</span>
+                                    </label>
+                                  </div>
+                                  <div id="div5" class="cat e">
+                                    <label>
+                                      <input type="checkbox" id="checkbox5" name="checks[]" value="5"><span>10 am to 11
+                                        am</span>
+                                    </label>
+                                  </div>
+                                  <div id="div6" class="cat f">
+                                    <label>
+                                      <input type="checkbox" id="checkbox6" name="checks[]" value="6"><span>11 am to 12
+                                        am</span>
+                                    </label>
+                                  </div>
+                                  <div id="div7" class="cat g">
+                                    <label>
+                                      <input type="checkbox" id="checkbox7" name="checks[]" value="7"><span>12 am to 1
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div8" class="cat h">
+                                    <label>
+                                      <input type="checkbox" id="checkbox8" name="checks[]" value="8"><span>1 pm to 2
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div9" class="cat i">
+                                    <label>
+                                      <input type="checkbox" id="checkbox9" name="checks[]" value="9"><span>2 pm to 3
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div10" class="cat j">
+                                    <label>
+                                      <input type="checkbox" id="checkbox10" name="checks[]" value="10"><span>3 pm to 4
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div11" class="cat k">
+                                    <label>
+                                      <input type="checkbox" id="checkbox11" name="checks[]" value="11"><span>4 pm to 5
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div12" class="cat l">
+                                    <label>
+                                      <input type="checkbox" id="checkbox12" name="checks[]" value="12"><span>5 pm to 6
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div13" class="cat m">
+                                    <label>
+                                      <input type="checkbox" id="checkbox13" name="checks[]" value="13"><span>6 pm to 7
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div14" class="cat n">
+                                    <label>
+                                      <input type="checkbox" id="checkbox14" name="checks[]" value="14"><span>7 pm to 8
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div15" class="cat o">
+                                    <label>
+                                      <input type="checkbox" id="checkbox15" name="checks[]" value="15"><span>8 pm to 9
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div16" class="cat p">
+                                    <label>
+                                      <input type="checkbox" id="checkbox16" name="checks[]" value="16"><span>9 pm to 10
+                                        pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div17" class="cat q">
+                                    <label>
+                                      <input type="checkbox" id="checkbox17" name="checks[]" value="17"><span>10 pm to
+                                        11 pm</span>
+                                    </label>
+                                  </div>
+                                  <div id="div18" class="cat r">
+                                    <label>
+                                      <input type="checkbox" id="checkbox18" name="checks[]" value="18"><span>11 pm to
+                                        12 pm</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </form>
+                        </div>
+                </div>
+              </div>
+        </div>
+        <div style="width: 100%; display: {{form_2}};" class="left">
+          <h3>booking 2</h3>
+          <form action="/booking_turnament" method="post">
+            {% csrf_token %}
+            <table width="100%">
+              <tr>
+                <td style=" padding: 3px;">
+                  <label for="sportd">sports :</label>
+                </td>
+                <td style=" padding: 3px;">
+                  <select id="sports2" class="input_edit" name="sports2" {disabled}>
+                    <option value="{{sports_id}}">{{ sports_name }} </option>
+                  </select>
+                </td>
+                <tr>
+                  <td style=" padding: 3px;">
+                    <label for="sportd"> ground :</label>
+                  </td>
+                  <td style=" padding: 3px;">
+                    <select class="input_edit" id="ground2" name="ground2">
+                      {% for c in ground %}
+                      <option value="{{c.ground_id}}"> {{c.ground_name}} </option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                </tr>
+              <tr>
+                <td style=" padding: 3px;">
+                  <label for="team_select">team :</label>
+                </td>
+                <td style=" padding: 3px;">
+                  <select class="input_edit" id="team2" name="team2">
+                    {% for d in team %}
+                    <option value="{{d.team_id}}"> {{d.name}} </option>
+                    {% endfor %}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td style=" padding: 3px;">
+                  <label for="date"> date :</label>
+                </td>
+                <td style=" padding: 3px;">
+                  <input class="input_edit" type="date" id="date2"  min="{{today2}}" name="date2">
+                </td>
+              </tr>
+              <tr>
+                <td style=" padding: 3px;">
+
+                </td>
+                <td style=" padding: 3px;">
+                  <p style="margin: 0pt; color: red;" id="e4">{{message.date2}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td style=" padding: 3px;">
+                  <label for="time"> time :</label>
+                </td>
+                <td style=" padding: 3px;">
+                  <a class="button" onclick="getTime2();" href="#popup1">select time slot</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  
+                </td>
+                <td style=" padding: 3px;">
+                  <p style="margin: 0pt; color: red;" id="e4">{{message.check2}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+
+                </td>
+                <td style=" padding: 3px;">
+                  <input id="s_id" name="s_id" value="{{s_id}}" type="hidden">
+                  <input type="submit" style="background-color: blue; width: 70px;
+                  height: 25px; border-radius: 25px;" value="Submit">
+                </td>
+              </tr>
+
+            </table>
+
+            <div id="popup1" class="overlay">
+              <div class="popup">
+                <br> <a class="close" href="#"> ok </a> <br> <br>
+                <div class="content">
+                  <div id="divv1" class="cat a">
+                    <label>
+                      <input type="checkbox" id="checkboxx1" name="checks2[]" value="1"><span>6 am to 7 am</span>
+                    </label>
+                  </div>
+
+                  <div id="divv2" class="cat b">
+                    <label>
+                      <input type="checkbox" id="checkboxx2" name="checks2[]" value="2"><span>7 am to 8 am</span>
+                    </label>
+                  </div>
+
+                  <div id="divv3" class="cat c">
+                    <label>
+                      <input type="checkbox" id="checkboxx3" name="checks2[]" value="3"><span>8 am to 9 am</span>
+                    </label>
+                  </div>
+
+                  <div id="divv4" class="cat d">
+                    <label>
+                      <input type="checkbox" id="checkboxx4" name="checks2[]" value="4"><span>9 am to 10 am</span>
+                    </label>
+                  </div>
+
+                  <div id="divv5" class="cat e">
+                    <label>
+                      <input type="checkbox" id="checkboxx5" name="checks2[]" value="5"><span>10 am to 11 am</span>
+                    </label>
+                  </div>
+
+                  <div id="divv6" class="cat f">
+                    <label>
+                      <input type="checkbox" id="checkboxx6" name="checks2[]" value="6"><span>11 am to 12 am</span>
+                    </label>
+                  </div>
+                  <div id="divv7" class="cat g">
+                    <label>
+                      <input type="checkbox" id="checkboxx7" name="checks2[]" value="7"><span>12 am to 1 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv8" class="cat h">
+                    <label>
+                      <input type="checkbox" id="checkboxx8" name="checks2[]" value="8"><span>1 pm to 2 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv9" class="cat i">
+                    <label>
+                      <input type="checkbox" id="checkboxx9" name="checks2[]" value="9"><span>2 pm to 3 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv10" class="cat j">
+                    <label>
+                      <input type="checkbox" id="checkboxx10" name="checks2[]" value="10"><span>3 pm to 4 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv11" class="cat k">
+                    <label>
+                      <input type="checkbox" id="checkboxx11" name="checks[]" value="11"><span>4 pm to 5 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv12" class="cat l">
+                    <label>
+                      <input type="checkbox" id="checkboxx12" name="checks[]" value="12"><span>5 pm to 6 pm</span>
+                    </label>
+                  </div>
+                  <div id="divv13" class="cat m">
+                    <label>
+                      <input type="checkbox" id="checkboxx13" name="checks2[]" value="13"><span>6 pm to 7 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv14" class="cat n">
+                    <label>
+                      <input type="checkbox" id="checkboxx14" name="checks2[]" value="14"><span>7 pm to 8 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv15" class="cat o">
+                    <label>
+                      <input type="checkbox" id="checkboxx15" name="checks2[]" value="15"><span>8 pm to 9 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv16" class="cat p">
+                    <label>
+                      <input type="checkbox" id="checkboxx16" name="checks2[]" value="16"><span>9 pm to 10 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv17" class="cat q">
+                    <label>
+                      <input type="checkbox" id="checkboxx17" name="checks2[]" value="17"><span>10 pm to 11 pm</span>
+                    </label>
+                  </div>
+
+                  <div id="divv18" class="cat r">
+                    <label>
+                      <input type="checkbox" id="checkboxx18" name="checks[]" value="18"><span>11 pm to 12 pm</span>
+                    </label>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </td>
+    <td>
+       
+      <h3>All booking :</h3>
+      <table class="tableadd" style="width:100%">
+        <tr class="tradd">
+          <td class="tdadd">
+            sports
+          </td>
+          <td class="tdadd">
+            ground 
+          </td>
+          <td class="tdadd">
+            team
+          </td>
+          <td class="tdadd">
+            date
+          </td>
+          <td class="tdadd">
+            start time
+          </td>
+          <td class="tdadd">
+            end time
+          </td>
+          <td class="tdadd">
+            status
+          </td>
+          <td class="tdadd">
+            pay
+          </td class="tdadd">
+        </tr>
+        {% for a in data %}
+        <tr>
+          <td class="tdadd">
+            {{a.sports.sports_name}}
+          </td>
+          <td class="tdadd">
+            {{a.ground.ground_name}}
+          </td>
+          <td class="tdadd">
+            {{a.team.name}}
+          </td>
+          <td class="tdadd">
+            {{a.date}}
+          </td>
+          <td class="tdadd">
+            {{a.start_time}}
+          </td>
+          <td class="tdadd">
+            {{a.end_time}}
+          </td>
+          <td class="tdadd">
+            {{a.status}}
+          </td>
+          <td class="tdadd">
+            {% if a.status %}
+                      payed
+                      {% else %}
+                      <a  style="color: blue;" href="makePaymentForbooking/{{a.booking_id}}">Pay</a>
+            {% endif %}
+            
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+
+    </td>
+    </tr>
+    </table>
+  </div>
+  </div>
+  </li>
+  </ul>
+  </div>
+  </div>
+  </div>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="assets2/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
+  <script src="{% static 'assets2/js/functions-min.js'%}"></script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <style>
+    a,
+    a:hover,
+    a:active
+    a:visited {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- notification for small viewports and landscape oriented smartphones -->
+  <div class="device-notification">
+    <a class="device-notification--logo" href="#0">
+      <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+      <p>Sports Club</p>
+    </a>
+    <p class="device-notification--message">sports club has so much to offer that we must request you orient your device to
+      portrait or find a larger screen. You won't be disappointed.</p>
+  </div>
+
+  <div class="perspective effect-rotate-left">
+    <div class="container">
+      <div class="outer-nav--return"></div>
+      <div id="viewport" class="l-viewport">
+        <div class="l-wrapper">
+          <header class="header">
+            <a class="header--logo" href="#0">
+              <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+              <p>Sports Club</p>
+            </a>
+            <button class="header--cta cta">Log in</button>
+
+          </header>
+          <nav class="l-side-nav">
+            <ul class="side-nav">
+              <li class="is-active"><span><a href=""> home </a></span></li>
+              <li class="is-active"><span><a href="login_page"> login </a></span></li>
+              <li class="is-active"><span><a href="registration_page"> registration </a></span></li>
+              <li class="is-active"><span><a href="about_us"> about us </a></span></li>
+              <li class="is-active"><span><a href="contact_us"> contact us </a></span></li>
+            </ul>
+          </nav>
+
+
+
+
+
+          <div class="about">
+            <div class="work--lockup">
+
+              <div style="width: 100%;">
+                <div style="width: 60%; float: left; ">
+                  <h1> ABOUT US </h1>
+                  <h3>
+                    <pre>
+        A club management system project that
+provides and manages various club activities
+such as member registration, registration for 
+various regular and vacation batches and more. 
+            The sports club management system 
+manages the entire club activities and provides 
+respective functionality for various types of 
+visitors. It allows normal users to avail for 
+club membership, book the ground at for desired 
+days and even enroll for various activities 
+in the club. 
+    </pre>
+                  </h3>
+                </div>
+                <div style="margin-left: 40%; margin-top: 10%;">
+                  <img src="{% static 'assets2/img/bb.png'%}" style=" height: 350px; width:350px;  margin-top: 10%;" alt="Welcome">
+                </div>
+              </div>
+              </form>
+            </div>
+
+
+          <div class="about">
+            <div class="work--lockup">
+            
+            </div>
+
+          </div>
+      
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="{% static 'assets2/js/functions-min.js'%}"></script>
+</body>
+
+</html>

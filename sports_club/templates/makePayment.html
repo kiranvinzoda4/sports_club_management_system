@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <link rel="stylesheet" href="{% static 'assets2/css/my_css.css'%}">
+  <script  type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    
+  </script>
+  <style> a, a:hover, a:active, a:visited { color: white;  text-decoration: none;} </style>
+</head>
+<body>
+
+<!-- notification for small viewports and landscape oriented smartphones -->
+<div class="device-notification">
+  <a class="device-notification--logo" href="#0">
+    <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+    <p>Sports Club</p>
+  </a>
+  <p class="device-notification--message">Sports club has so much to offer that we must request you orient your device to portrait or find a larger screen. You won't be disappointed.</p>
+</div>
+
+<div class="perspective effect-rotate-left">
+  <div class="container"><div class="outer-nav--return"></div>
+    <div id="viewport" class="l-viewport">
+      <div class="l-wrapper">
+        <header class="header">
+          <a class="header--logo" href="#0">
+            <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+            <p>Sports Club</p>
+          </a>
+          <button class="header--cta cta">Log in</button>
+          
+        </header>
+       
+        <ul class="l-main-content main-content">
+          <li class="l-section section section--is-active">
+            <div class="intro">
+              <div class="about--banner">
+                <h1>class plan details </h1>
+                <table style="width: 100%; border-radius: 10px;">
+                  <tr> 
+                    <td>
+                      <div id="edit_div" style=" width :100%;display: none;" class="right">jhgjhg</div>
+                      <h3>
+                      <table style="width:100%">
+                        <tr>
+                            <td>
+                              name 
+                            </td>
+                            <td>
+                              sports name 
+                            </td>
+                            <td>
+                              ground name
+                            </td>
+                            <td>
+                              ground charges for booking 
+                            </td>
+                            <td>
+                             date 
+                            </td>
+                            <td>
+                            start at
+                            </td>
+                            <td>
+                              ends at 
+                            </td>
+                            <td>
+                              BUY
+                            </td>
+                          </tr>
+                        <tr>
+                          <td>
+                            {{booking.user.first_name}}  
+                          </td>
+                          <td>
+                            {{booking.sports.sports_name}}  
+                          </td>
+                          <td>
+                            {{booking.ground.ground_name}}  
+                          </td>
+                          <td>
+                            {{amount}}   
+                          </td>
+                          <td>
+                            {{booking.date}}   
+                          </td>
+                          <td>
+                            {{booking.start_time}}  
+                          </td>
+                          <td>
+                            {{booking.end_time}}   
+                          </td>
+                          <td>
+                            <button  class="mybutton" id="rzp-button1">Pay</button>
+                            
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "{{data.api_key}}", // Enter the Key ID generated from the Dashboard
+    "name": "Sports club",
+    "description": "sports ground booking",
+    "order_id": "{{data.order_id}}", 
+    "callback_url":"{{data.url}}",
+    "handler": function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+    },
+    "prefill": {
+        "name": "{{user.first_name}}",
+        "email": "{{user.email}}",
+        "contact": "{{user.mobile_no}}"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "white"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+                          </td>
+                        </tr>
+                      </table>
+                    </h3>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a href="/booking"> back </a>
+                    </td>
+                  </tr>
+                </table> 
+                </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets2/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
+<script src="{% static 'assets2/js/functions-min.js'%}"></script>
+</body>
+</html>

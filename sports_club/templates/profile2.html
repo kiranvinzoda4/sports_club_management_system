@@ -1,0 +1,456 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <link rel="stylesheet" href="{% static 'assets2/css/my_css.css'%}">
+  <script>
+    function edit_validation2(e) {
+
+      var fname = document.getElementById("fname").value;
+      var lname = document.getElementById("lname").value;
+      var user_email = document.getElementById("user_email").value;
+      var user_pass = document.getElementById("user_pass").value;
+      var mobile_no = document.getElementById("mobile_no").value;
+      var age = document.getElementById("age").value;
+      var address = document.getElementById("address").value;
+
+      if (fname == "") {
+        alert("enter your first name");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+      if (lname == "") {
+        alert("enter your last name");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+
+      if (age == "") {
+        alert("enter your age");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+
+      if (isNaN(age)) {
+        alert("invalid age");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+
+      if (mobile_no == "") {
+        alert("enter your mobile number");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+
+      if (isNaN(mobile_no)) {
+        alert("invalid mobile number");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+
+      if (mobile_no.langth != 10 || isNaN(mobile_no)) {
+        alert("invalid mobile number");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+
+      if (user_email == "") {
+        alert("enter your email");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+
+      if (address == "") {
+        alert("enter your address");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+    }
+
+    var gander = "{{data.gender}}";
+    console.log(gander);
+    if (gander == "male") {
+      $("#div_female").attr('display', "none");
+    }
+    if (gander == "female") {
+      $("#div_male").atr('display', "none");
+    }
+
+    function edit_div() {
+      console.log("hfjafafgajs");
+      $("#info").hide();
+      $("#edit_info").show();
+    }
+
+    function ddddd(div_id) {
+      console.log(div_id);
+      $("#"+div_id).show();
+    }
+
+  </script>
+  <style>
+    a,
+    a:hover,
+    a:active,
+    a:visited {
+      color: white;
+      text-decoration: none;
+    }
+    
+  </style>
+</head>
+
+<body>
+  
+  <!-- notification for small viewports and landscape oriented smartphones -->
+  <div class="device-notification">
+    <a class="device-notification--logo" href="#0">
+      <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+      <p>Sports Club</p>
+    </a>
+    
+    <p class="device-notification--message">Sports club has so much to offer that we must request you orient your device to
+      portrait or find a larger screen. You won't be disappointed.</p>
+  </div>
+  
+  <div class="perspective effect-rotate-left">
+    <div class="container">
+      <div class="outer-nav--return"></div>
+      <div id="viewport" class="l-viewport">
+        <div class="l-wrapper">
+          <header class="header">
+            <a class="header--logo" href="#0">
+              <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+              <p>Sports Club</p>
+            </a>
+            <a href="logout" style="background-color: blue; width:5%; border-radius: 25px;"><center>log out</center></a>
+  
+          </header>
+          <nav class="l-side-nav">
+            <ul class="side-nav">
+              <li class="is-active"><span><a href="profile2"> Profile </a></span></li>
+              <li class="is-active"><span><a href="team_page"> team </a></span></li>
+              <li class="is-active"><span><a href="player"> players </a></span></li>
+              <li class="is-active"><span><a href="booking"> booking </a></span></li>
+              <li class="is-active"><span><a href="tournament"> tournament </a></span></li>
+              <li class="is-active"><span><a href="class"> class </a></span></li>
+            </ul>
+          </nav>
+          <ul class="l-main-content main-content">
+            <li class="l-section section section--is-active">
+
+              <div style="width: 100%;">
+                <div style="margin-left: 16%; width: 20%;  border-radius: 5%; float: left; ">
+
+                  {% if data.gender == 'male' %}
+                  <img id="dp_male" width="60%" style="border-radius: 50%; margin-left: 4%;"
+                    src="{% static 'assets2/img/male2.jpg'%}" alt="Global">
+
+                  {% else %}
+                  <img id="dp_female" width="60%" style="border-radius: 50%; margin-left: 4%;"
+                    src="{% static 'assets2/img/female.jpg'%}" alt="Global">
+
+                  {% endif %}
+
+                  <p style="margin-left: 15%;"> {{ data.first_name }} {{ data.last_name }} </p>
+
+                </div>
+                <div style="margin-left: 35%;  margin-top: 8%; border-radius: 13pt; background: blue;">
+
+                  <p>General Information</p>
+
+                  <div id="info" style=" display:{{display2}}">
+                    <table style="margin-left: 0pt;">
+                      <tr>
+                        <td>
+                          Name :-
+                        </td>
+                        <td>
+                          {{data.first_name}} {{data.last_name}} 
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          gender :-
+                        </td>
+                        <td>
+                          {{data.gender}}
+                        </td>
+                      </tr>
+                      <td>
+                        age :-
+                      </td>
+                      <td>
+                        {{data.age}}
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Enail :-
+                        </td>
+                        <td>
+                          {{data.email}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Address :-
+                        </td>
+                        <td>
+                          {{data.address}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          mobile no :-
+                        </td>
+                        <td>
+                          {{data.mobile_no}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><button id="edit" style=" border-radius: 25px; background-color: black; " 
+                          onclick="edit_div();">Edit</button></td>
+                      </tr>
+                    </table>
+                  </div>
+              
+                  <div style="display: {{display}}; border-radius: 13pt;" id="edit_info">
+                    <form method="post" action="uptade_profile">
+                      {% csrf_token %}
+                    <table style="width: auto;  margin-left: 1%;">
+                      <tr>
+                        <td>
+                         first name
+                        </td>
+                        <td style="padding-left : 4pt">
+                          <input id="fname" class="input_edit" value="{{ data.first_name }}" name="fname" type="text"
+                            spellcheck="false">
+                        </td>
+                        <td style="padding-left : 4pt">last name</td>
+                        <td style="padding-left : 4pt">
+                          <input id="lname" class="input_edit" value="{{ data.last_name }}" name="lname" type="text"
+                          spellcheck="false">
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>
+                          </td>
+                          <td style="padding-left : 4pt">
+                            <p style="margin: 0%; color: red;">{{message.fname}}</p>
+                          </td>
+                          <td>
+                          </td>
+                          <td style="padding-left : 4pt">
+                            <p style=" margin: 0%;color: red;">{{message.lname}}</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            gender
+                          </td>
+                          <td style="padding-left : 4pt">
+                            <select name="gender" style=" background: black; border-radius: 13pt; " id="gender">                          
+                              <option value="male" {% if data.gender == "male"%} selected="selected"{% endif %}>male</option>                           
+                              <option value="female" {% if data.gender == "female"%} selected="selected"{% endif %}>female</option>
+                            </select>
+                          </td>
+                          <td style="padding-left : 4pt">
+                            age
+                          </td>
+                          <td style="padding-left : 4pt">
+                            <input id="age" class="input_edit" value="{{ data.age }}" name="age" type="text"
+                          spellcheck="false">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td style="padding-left : 4pt"><p style=" margin: 0%;color: red;">{{message.age}}</p></td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Email
+                          </td>
+                          <td style="padding-left : 4pt">
+                            <input id="email" class="input_edit" name="email" value="{{ data.email }}" type="text"
+                          spellcheck="false">
+                          </td>
+                          <td style="padding-left : 4pt">
+                            Address
+                          </td>
+                          <td style="padding-left : 4pt">
+                            <input id="address" class="input_edit" name="address" value="{{ data.address }}" type="text"
+                            spellcheck="false">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td style="padding-left : 4pt">
+                            <p style=" margin: 0%;color: red;">{{message.user_email}}</p>
+                          </td>
+                          <td></td>
+                          <td style="padding-left : 4pt">
+                            <p style=" margin: 0%;color: red;">{{message.user_address}}</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            mobile no
+                          </td>
+                          <td style="padding-left : 4pt">
+                            <input id="mobile_no" class="input_edit" value="{{ data.mobile_no }}" name="mobile_no"
+                            type="text" spellcheck="false">
+                          </td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td style="padding-left : 4pt"><p style=" margin: 0%;color: red;">{{message.mobile}}</p></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>
+                            <button id="edit" type="submit" class="mybutton" style=" border-radius: 25px; background-color: black">
+                            save </button>
+                        <td>
+                      </tr>
+                    </table>
+                  </form>
+                  </div>
+                </div>
+              <div style="width: 100%;">
+                <div style="margin-left: 16%;  border-radius: 5%; float: left; ">
+                </div>
+                <div style="margin-left: 35%;  margin-top: 2%; border-radius: 13pt; background: blue;">
+                  <p style="margin-left: 1%;">tournament request </p>
+                  {% for t in tournament %}
+                  <div onclick="ddddd('{{t.tournament_id}}');" style="border-radius: 13pt; background-color: white; cursor: pointer;">
+
+                    <table style="width: 50%; border-radius: 13pt; margin-left: 2%; background-color: white;">
+                      <tr>
+                        <td style="color: black;">
+                           title
+                        </td>
+                        <td style="color: black;">
+                          Sports
+                        </td>
+                        <td style="color: black;">
+                          created by
+                        </td>
+                        <td style="color: black;">
+                          <a style="color:blue;" href="send_email_to_user/{{t.created_by.user_id}}" target="_blank">send email this to user </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="color: black;">
+                          {{t.name}}
+                        </td>
+                        <td style="color: black;">
+                          {{t.sports.sports_name}}
+                        </td>
+                        <td style="color: black;">
+                          {{t.created_by.first_name}} {{t.created_by.last_name}}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="display: none;" id="{{t.tournament_id}}">
+                    <table style="width: 100%; margin-left: 1%;">
+                      <tr>
+                        <td>
+                          ground
+                        </td>
+                        <td>
+                          date
+                        </td>
+                        <td>
+                          start time
+                        </td>
+                        <td>
+                          end time
+                        </td>
+                        <td>
+                          details
+                        </td>
+                        {% if t.response == 'accepted'%} 
+                        <td>
+                          your response
+                        </td>
+                        {% else %}
+                        <td>
+                          accept
+                        </td>
+                        <td>
+                          reject  
+                        </td>
+                        {% endif %}
+                      </tr>
+                      
+                      <tr>
+                        <td>
+                          {{t.booking.ground.ground_name}}
+                        </td>
+                        <td>
+                          {{t.booking.date}}
+                        </td>
+                        <td>
+                          {{t.booking.start_time}}
+                        </td>
+                        <td>
+                          {{t.booking.end_time}}
+                        </td>
+                        <td>
+                          {{t.details}}
+                        </td>
+                        {% if t.response == 'accepted'%} 
+                        <td>
+                          accepted
+                        </td>
+                        {% else %}
+                        <td>
+                          <a href="tournament_accept/{{t.tournament_id}}">accept</a>
+                        </td>
+                        <td>
+                          <a href="tournament_reject/{{t.tournament_id}}">reject</a>
+                        </td>
+                        {% endif %}
+                      </tr>
+                     
+                    </table>
+                  </div>
+                   {% endfor %}
+                </div>
+
+              </div>
+
+
+
+
+
+
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+              <script>window.jQuery || document.write('<script src="assets2/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
+              <script src="{% static 'assets2/js/functions-min.js'%}"></script>
+</body>
+
+</html>

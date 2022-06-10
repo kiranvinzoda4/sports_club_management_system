@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <link rel="stylesheet" href="{% static 'assets2/css/my_css.css'%}">
+  <script  type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    
+  </script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <style> a, a:hover, a:active, a:visited { color: white;  text-decoration: none;}
+      .tableadd { border-collapse: separate;  }
+.tdadd { border: solid 1px white; }
+
+.tradd { background-color: white; color: black; }
+tr:first-child td:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+  </style>
+  
+</head>
+<body>
+
+<!-- notification for small viewports and landscape oriented smartphones -->
+<div class="device-notification">
+  <a class="device-notification--logo" href="#0">
+    <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+    <p>Sports Club</p>
+  </a>
+  <p class="device-notification--message">Sports club has so much to offer that we must request you orient your device to portrait or find a larger screen. You won't be disappointed.</p>
+</div>
+
+<div class="perspective effect-rotate-left">
+  <div class="container"><div class="outer-nav--return"></div>
+    <div id="viewport" class="l-viewport">
+      <div class="l-wrapper">
+        <header class="header">
+          <a class="header--logo" href="#0">
+            <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+            <p>Sports Club</p>
+          </a>
+          <a href="logout" style="background-color: blue; width:5%; border-radius: 25px;"><center>log out</center></a>
+          
+        </header>
+        <nav class="l-side-nav">
+          <ul class="side-nav">
+            <li class="is-active"><span><a href="profile2"> Profile </a></span></li>
+            <li class="is-active"><span><a href="team_page"> team </a></span></li>
+            <li class="is-active"><span><a href="player"> players </a></span></li>
+            <li class="is-active"><span><a href="booking"> booking </a></span></li>         
+            <li class="is-active"><span><a href="tournament"> tournament </a></span></li> 
+            <li class="is-active"><span><a href="class"> class </a></span></li> 
+            
+          </ul>
+        </nav>
+        <ul class="l-main-content main-content">
+          <li class="l-section section section--is-active">
+            <div class="intro">
+              <div class="about--banner">
+                <h1>Classes plans </h1>
+                <h3>
+                <table class="tableadd" style="width:100%">
+                  <tr class="tradd">
+                    <td class="tdadd">
+                      claass 
+                    </td>
+                    <td class="tdadd">
+                      for sports name
+                    </td>
+                    <td class="tdadd">
+                      price
+                    </td>
+                    <td class="tdadd">
+                      details
+                    </td>
+                    <td class="tdadd">
+                      BUY
+                    </td>
+                  </tr>
+                  {%  for a in data    %}
+                  <tr>
+                    <td class="tdadd">
+                      {{a.name}}  
+                    </td>
+                    <td class="tdadd">
+                      {{a.sports.sports_name}} 
+                    </td>
+                    <td class="tdadd">
+                      {{a.price}} 
+                    </td>
+                    <td class="tdadd">
+                      {{a.details}} 
+                    </td>
+                    <td class="tdadd">
+                      <span><a style="color: blue;" href="buy_pack/{{a.classes_id}}" target="_blank">buy</a></span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </table>
+                </h3>
+                      </div>
+                    </td>
+                    <td>
+                      
+                       
+                    </td>
+                  </tr>
+                </table>
+                    </td>
+                  </tr>
+                </table> 
+                        
+                    </td>
+                  </tr>
+                </table> 
+                </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets2/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
+<script src="{% static 'assets2/js/functions-min.js'%}"></script>
+</body>
+</html>

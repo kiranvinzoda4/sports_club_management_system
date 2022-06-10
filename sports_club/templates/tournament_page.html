@@ -1,0 +1,540 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <link rel="stylesheet" href="{% static 'assets2/css/my_css.css'%}">
+  <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script>
+
+    function getUser() {
+
+      var g_id = $("#sports").val();
+      console.log(g_id);
+      $.ajax({
+
+        type: "POST",
+        url: "user_for_tournament",
+        data: '{"id" : ' + g_id + '}',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+          console.log(result);
+          $("#checkbox_div").empty();
+          for (i = 0; i < result.length; i++) {
+
+            console.log(result[i].id);
+
+            $("#checkbox_div").append("<div id='div" + result[i].user_id + "' class='at a'><label><input type='radio' id='checkbox" + result[i].user_id + "' name='checks' value='" + result[i].user_id + "'><span>" + result[i].fname + " " + result[i].lname + "</span></label></div>");
+          };
+
+
+        }
+      });
+    }
+
+    function getteamdata() {
+
+      var s_id = $("#sports").val();
+      console.log(s_id);
+      $.ajax({
+
+        type: "POST",
+        url: "getteams",
+        data: '{"id" : ' + s_id + '}',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+          $("#team option").remove();
+          for (var i = result.length - 1; i >= 0; i--) {
+            $("#team").append('<option value=' + result[i].id + ' id=' + result[i].id + '>' + result[i].name + '</option>');
+          };
+        }
+      });
+
+    }
+
+  </script>
+  <style>
+       .tableadd { border-collapse: separate;  }
+.tdadd { border: solid 1px white; }
+
+.tradd { background-color: white; color: black; }
+tr:first-child td:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+
+    a,
+    a:hover,
+    a:active,
+    a:visited {
+      color: white;
+      text-decoration: none;
+    }
+
+    .box {
+      width: 40%;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 35px;
+      border: 2px solid #fff;
+      border-radius: 20px/50px;
+      background-clip: padding-box;
+      text-align: center;
+    }
+
+    .button {
+      font-size: 1em;
+      padding: 10px;
+      color: #fff;
+      border: 2px solid #06D85F;
+      border-radius: 20px/50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease-out;
+    }
+
+    .button:hover {
+      background: #06D85F;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      transition: opacity 500ms;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .overlay:target {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup {
+      margin: 70px auto;
+      padding: 20px;
+      background: rgb(31, 29, 29);
+      border-radius: 5px;
+      width: 30%;
+      position: relative;
+      transition: all 5s ease-in-out;
+    }
+
+    .popup h2 {
+      margin-top: 0;
+      color: #333;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    .popup .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: all 200ms;
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .popup .close:hover {
+      color: #06D85F;
+    }
+
+    .popup .content {
+      max-height: 30%;
+      overflow: auto;
+    }
+
+    @media screen and (max-width: 700px) {
+      .box {
+        width: 70%;
+      }
+
+      .popup {
+        width: 70%;
+      }
+    }
+
+    div label input {
+      margin-right: 100px;
+    }
+
+    .cat {
+      margin: 4px;
+      background-color: #104068;
+      border-radius: 4px;
+      border: 1px solid #fff;
+      overflow: hidden;
+      float: left;
+    }
+
+    .cat label {
+      float: left;
+      line-height: 3.0em;
+      width: 8.0em;
+      height: 3.0em;
+    }
+
+    .cat label span {
+      text-align: center;
+      padding: 3px 0;
+      display: block;
+    }
+
+    .cat label input {
+      position: absolute;
+      display: none;
+      color: #fff !important;
+    }
+
+    /* selects all of the text within the input element and changes the color of the text */
+    .cat label input+span {
+      color: #fff;
+    }
+
+
+    /* This will declare how a selected input will look giving generic properties */
+    .cat input:checked+span {
+      color: #ffffff;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+    }
+
+
+    /*
+This following statements selects each category individually that contains an input element that is a checkbox and is checked (or selected) and chabges the background color of the span element.
+*/
+
+    .a input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .b input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .c input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .d input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .e input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .f input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .g input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .h input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .i input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .j input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .k input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .l input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .m input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .n input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .o input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .p input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .q input:checked+span {
+      background-color: #82D44E;
+    }
+
+    .r input:checked+span {
+      background-color: #82D44E;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- notification for small viewports and landscape oriented smartphones -->
+  <div class="device-notification">
+    <a class="device-notification--logo" href="#0">
+      <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+      <p>Sports Club</p>
+    </a>
+    <p class="device-notification--message">Sports club has so much to offer that we must request you orient your device to
+      portrait or find a larger screen. You won't be disappointed.</p>
+  </div>
+
+  <div class="perspective effect-rotate-left">
+    <div class="container">
+      <div class="outer-nav--return"></div>
+      <div id="viewport" class="l-viewport">
+        <div class="l-wrapper">
+          <header class="header">
+            <a class="header--logo" href="#0">
+              <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+              <p>Sports Club</p>
+            </a>
+            <a href="logout" style="background-color: blue; width:5%; border-radius: 25px;">
+              <center>log out</center>
+            </a>
+
+          </header>
+          <nav class="l-side-nav">
+            <ul class="side-nav">
+              <li class="is-active"><span><a href="profile2"> Profile </a></span></li>
+              <li class="is-active"><span><a href="team_page"> team </a></span></li>
+              <li class="is-active"><span><a href="player"> players </a></span></li>
+              <li class="is-active"><span><a href="booking"> booking </a></span></li>
+              <li class="is-active"><span><a href="tournament"> tournament </a></span></li>
+              <li class="is-active"><span><a href="class"> class </a></span></li>
+            </ul>
+          </nav>
+          <ul class="l-main-content main-content">
+            <li class="l-section section section--is-active">
+              <div class="intro">
+                <div class="about--banner">
+                  
+                  <table style="width: 100%;">
+                    <tr>
+                      <td style="width:40%;  padding: 15px;">
+                        <h1>tournament page</h1>
+                        <div style="width: 100%;" class="left">
+                          <h3>tournament request</h3>
+                          <form action="/add_tournament" method="post">
+                            {% csrf_token %}
+                            <table>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="duration"> title:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input class="input_edit" type="text" id="title" name="title">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e2">{{message.name}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="sportd">sports:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <select id="sports" onchange="getteamdata()" class="input_edit" name="sports">
+                                    <option value="select sport">select sport</option>
+                                    {% for i in data %}
+                                    <option value="{{i.sports_id}}">{{ i.sports_name }} </option>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e2">{{message.sport}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="sportd">team:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <select id="team" class="input_edit" name="team">
+                                    <option value="select team"> select team </option>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e2">{{message.team}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="time"> send requiest:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <a class="button" onclick="getUser();" href="#popup1">requiest</a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e2">{{message.user}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="duration"> detail:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input class="input_edit" type="text" name="detail" id="detail">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <p style="margin: 0pt; color: red;" id="e2">{{message.detail}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input type="submit" style="background-color: blue; width: 70px;
+                                  height: 25px; border-radius: 25px;" value="Submit">
+                                </td>
+                              </tr>
+                            </table>
+                            <div id="popup1" class="overlay">
+                              <div class="popup">
+                                <br> <a class="close" href="#"> ok </a> <br> <br>
+                                <div id="checkbox_div" class="content">
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                </div>
+              </div>
+              </td>
+              <td>
+                <h3>tournament </h3>
+                <table class="tableadd" style="width:100%">
+                  <tr class="tradd">
+                    <td style=" padding: 3px;" class="tdadd">
+                      title
+                    </td>
+                    <td style=" padding: 3px;" class="tdadd">
+                      sports
+                    </td>
+                    <td style=" padding: 3px;" class="tdadd">
+                      team
+                    </td>
+                    <td style=" padding: 3px;" class="tdadd">
+                      opponent
+                    </td>
+                    <td style=" padding: 3px;" class="tdadd">
+                      details
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      status
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      book ground
+                    </td class="tdadd" style=" padding: 3px;">
+                  </tr>
+                  {% for a in data2 %}
+                  <tr>
+                    <td class="tdadd" style=" padding: 3px;">
+                      {{a.name}}
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      {{a.sports.sports_name}}
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      {{a.team_1.name}}
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      {{a.accepted_user.first_name}}
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      {{a.details}}
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      {% if a.status %}
+                      active
+                      {% else %}
+                      deactive
+                      {% endif %}
+                    </td>
+                    <td class="tdadd" style=" padding: 3px;">
+                      {% if a.status %}
+                      booked
+                      {% else %}
+                      <a style="color: blue;" href="/booking_request_tournamate/{{a.tournament_id}}/{{a.sports.sports_id}}">book</a>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              </td>
+              </tr>
+              </table>
+        </div>
+        </td>
+        </tr>
+        </table>
+
+        </td>
+        </tr>
+        </table>
+      </div>
+    </div>
+    </li>
+    </ul>
+  </div>
+  </div>
+  </div>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="assets2/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
+  <script src="{% static 'assets2/js/functions-min.js'%}"></script>
+</body>
+
+</html>

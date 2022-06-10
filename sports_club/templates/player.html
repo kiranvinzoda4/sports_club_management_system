@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <link rel="stylesheet" href="{% static 'assets2/css/my_css.css'%}">
+  <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script>
+    function edit_funtion(Pname, Pgender, Tname, Pid, Tid) {
+      console.log(Pname);
+      console.log(Pgender);
+      console.log(Tname);
+      console.log(Pid);
+      console.log(Tid);
+      
+      $('#add_player').hide();
+      $('#update_player').show();
+      $("#name2").val(Pname);
+      $("#gender2").val(Pgender);
+      $("#team2").val(Tid);
+      $("#player_id2").val(Pid);
+      
+      document.getElementById('team2').value = Tid;
+
+    }
+  </script>
+  <style>
+    a,
+    a:hover,
+    a:active,
+    a:visited {
+      color: white;
+      text-decoration: none;
+    }
+
+
+    .tableadd { border-collapse: separate;  }
+.tdadd { border: solid 1px white; }
+
+.tradd { background-color: white; color: black; }
+tr:first-child td:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- notification for small viewports and landscape oriented smartphones -->
+  <div class="device-notification">
+    <a class="device-notification--logo" href="#0">
+      <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+      <p>Sports Club</p>
+    </a>
+    <p class="device-notification--message">Sports club has so much to offer that we must request you orient your device to
+      portrait or find a larger screen. You won't be disappointed.</p>
+  </div>
+
+  <div class="perspective effect-rotate-left">
+    <div class="container">
+      <div class="outer-nav--return"></div>
+      <div id="viewport" class="l-viewport">
+        <div class="l-wrapper">
+          <header class="header">
+            <a class="header--logo" href="#0">
+              <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+              <p>Sports Club</p>
+            </a>
+            <a href="logout" style="background-color: blue; width:5%; border-radius: 25px;"><center>log out</center></a>
+
+          </header>
+          <nav class="l-side-nav">
+            <ul class="side-nav">
+              <li class="is-active"><span><a href="profile2"> Profile </a></span></li>
+              <li class="is-active"><span><a href="team_page"> team </a></span></li>
+              <li class="is-active"><span><a href="player"> players </a></span></li>
+              <li class="is-active"><span><a href="booking"> booking </a></span></li>
+              <li class="is-active"><span><a href="tournament"> tournament </a></span></li>
+              <li class="is-active"><span><a href="class"> class </a></span></li>
+            </ul>
+          </nav>
+          
+          <ul class="l-main-content main-content">
+            <li class="l-section section section--is-active">
+              <div class="intro">
+                <div class="about--banner">
+                  <table style="width: 100%;">
+                    <tr>
+                      <td style=" padding: 15px;" style="width:40%;">
+                        <h1>players</h1>
+                        <div id="add_player" style="width: 100%;display: {{add}};" class="left">
+                          <h3>Add Players</h3>
+                          <form action="/add_player" method="post">
+                            {% csrf_token %}
+                            <table width="100%">
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="sportd">Name:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input class="input_edit" type="text" name="name" id="name">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td>
+                            <p style=" margin :0pt; color: red;">{{message}}</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="time"> gender:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <select id="gender" class="input_edit" name="gender">
+                                    <option value="male">male </option>
+                                    <option value="female">female </option>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="team"> team:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                            <select id="team" class="input_edit" name="team">
+                              {% for a in data %}
+                              <option value="{{a.team_id}}">{{a.name}} </option>
+                              {% endfor %}
+                            </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input type="submit" class="edit_field mybutton" value="Submit">
+                                </td>
+                              </tr>
+                            </table>
+                  
+                          </form>
+                        </div>
+
+                        <div id="update_player" style="display: {{edit}};width: 100%;" class="left">
+                          <h3>update Players</h3>
+                          <form action="/update_player" method="post">
+                            {% csrf_token %}
+                            <table width="100%">
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="sportd">Name:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input class="input_edit" type="text" name="name2" id="name2">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+
+                                </td>
+                                <td>
+                                  <p style="margin:0%; color: red;">{{error}}</p>
+                                  </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="time"> gender:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <select id="gender2" class="input_edit" name="gender2">
+                                    <option value="male">male </option>
+                                    <option value="female">female </option>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style=" padding: 3px;">
+                                  <label for="team2"> team:</label>
+                                </td>
+                                <td style=" padding: 3px;">
+                            <select id="team2" class="input_edit" name="team2">
+                              {% for a in data %}
+                              <option value="{{a.team_id}}">{{a.name}} </option>
+                              {% endfor %}
+                            </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input class="input_edit" type="hidden" value="{{player_id2}}" name="player_id2" id="player_id2">
+                            
+                                </td>
+                                <td style=" padding: 3px;">
+                                  <input type="submit" class="edit_field mybutton" value="Submit">
+                                </td>
+                              </tr>
+                            </table>                
+                          </form>
+                        </div>
+
+                      </td style="border-right: 4px dotted blue;">
+                      <td>
+                        <center>
+                          <h3>All Players :</h3>
+                          <table class="tableadd" style="width:90%">
+                            <tr class="tradd">
+                              <td style=" padding: 3px;" class="tdadd">
+                                name
+                              </td>
+                              <td style=" padding: 3px;" class="tdadd">
+                                gender
+                              </td>
+                              <td class="tdadd" style=" padding: 3px;">
+                                team name
+                              </td>
+                              <td class="tdadd" style=" padding: 3px;">
+                                Edit
+                              </td>
+                              <td class="tdadd" style=" padding: 3px;">
+                                delete
+                              </td>
+                            </tr>
+                            {% for a in player %}
+                            <tr>
+                              <td class="tdadd" style=" padding: 3px;">
+                                {{a.name}}
+                              </td>
+                              <td class="tdadd" style=" padding: 3px;">
+                                {{a.gender}}
+                              </td>
+                              <td class="tdadd" style=" padding: 3px;">
+                                {{a.team.name}}
+                              </td>
+                              <td class="tdadd" style=" padding: 3px;">
+                                <a style="color: blue;" onclick="edit_funtion('{{a.name}}','{{a.gender}}','{{a.team.name}}','{{a.player_id}}','{{a.team.team_id}}');"
+                                  href="#"> Edit</a>
+                              </td>
+                              <td class="tdadd" style=" padding: 3px;">
+                                <a style="color: blue;" href="delete_player/{{a.player_id}}">delete</a>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </table>
+                        </center>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="assets2/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
+  <script src="{% static 'assets2/js/functions-min.js'%}"></script>
+</body>
+
+</html>

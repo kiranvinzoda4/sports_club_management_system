@@ -1,0 +1,152 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>sports club</title>
+  <script src="{% static 'assets2/js/my_js.js'%}"></script>
+  <script src="{% static 'assets2/js/jquery.js'%}"></script>
+  <link rel="stylesheet" href="{% static 'assets2/css/main.css'%}">
+  <script>
+    function changepass(e) {
+      var pass1 = document.getElementById("pass1").value;
+      var pass2 = document.getElementById("pass2").value;
+      $('#e1').text("");
+      $('#e2').text("");
+      $('#error').text("");
+      if (pass1 == "") {
+        $('#e1').text("enter your password");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+      if (pass2 == "") {
+        $('#e2').text("enter your password");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+      if (pass2 != pass1) {
+        $('#error').text("both passwords are diffrent");
+        e.preventDefault(e);
+        someBug();
+        return false
+      }
+    }
+
+
+  </script>
+  <style>
+    input[type=text],
+    select {
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid blue;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: black;
+    }
+
+    input[type=password],
+    select {
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid blue;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- notification for small viewports and landscape oriented smartphones -->
+  <div class="device-notification">
+    <a class="device-notification--logo" href="#0">
+      <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+      <p>Sports Club</p>
+    </a>
+    <p class="device-notification--message">Sports club has so much to offer that we must request you orient your device to
+      portrait or find a larger screen. You won't be disappointed.</p>
+  </div>
+  <div class="perspective effect-rotate-left">
+    <div class="container">
+      <div class="outer-nav--return"></div>
+      <div id="viewport" class="l-viewport">
+        <div class="l-wrapper">
+          <header class="header">
+            <a class="header--logo" href="#0">
+              <img src="{% static 'assets2/img/logo.png'%}" alt="Global">
+              <p>Sports Club</p>
+            </a>
+            <button class="header--cta cta">Log in</button>
+          </header>
+          <nav class="l-side-nav">
+            <ul class="side-nav">
+              <li class="is-active"><span><a href="profile2"> Profile </a></span></li>
+              <li class="is-active"><span><a href="team_page"> team </a></span></li>
+              <li class="is-active"><span><a href="player"> players </a></span></li>
+              <li class="is-active"><span><a href="booking"> booking </a></span></li>
+              <li class="is-active"><span><a href="tournament"> tournament </a></span></li>
+              <li class="is-active"><span><a href="class"> class </a></span></li>
+            </ul>
+          </nav>
+          <div class="about">
+            <div class="work--lockup">
+              <div style="width: 100%;">
+                <div style="width: 50%; margin-top: 10%; float: left; ">
+                    <form method="post" action="/inquiry_email">
+                    {% csrf_token %}
+                    <table>
+                      <tr>
+                        <td style="padding:10px">
+                            user name : 
+                        </td>
+                        <td style="padding:10px">
+                            {{first_name}} {{last_name}}
+                            <input type="hidden" value="{{user_id}}" id="üser_id" name="user_id">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:10px">
+                          <label for="password">type your message</label>
+                        </td>
+                        <td style="padding:10px">
+                            <textarea style="color:black" id="message" name="message"></textarea>
+                            <p style="margin: 0pt; color: red;" id="e1"></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:10px">
+                         
+                        </td>
+                        <td style="padding:10px">
+                            <input type="submit" style="background-color: blue; width: 70px;
+                            height: 30px; border-radius: 25px;" value="send">   
+                        </td>
+                      </tr>
+                    </table>
+                </div>
+                <div style="margin-left: 50%;">
+                  <img src="{% static 'assets2/img/4.png'%}" style="width: 120%; height: 120%;" alt="Welcome">
+                </div>
+              </div>
+              </form>
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            <script src="{% static 'assets2/js/functions-min.js'%}"></script>
+            <style>
+              a,
+              a:hover,
+              a:active,
+              a:visited {
+                color: white;
+                text-decoration: none;
+              }
+            </style>
+</body>
+</html>
